@@ -1,4 +1,4 @@
-# bronze_loan_daily.py
+# bronze_file.py
 # Ingest raw LMS loan daily CSV into Bronze with lineage + partitioned output.
 # Lets you pick a NEW save location via --output_dir and choose format (parquet|csv).
 
