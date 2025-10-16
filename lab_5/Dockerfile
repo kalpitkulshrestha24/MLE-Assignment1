@@ -1,25 +1,28 @@
 # Use the official Apache Airflow image (adjust the version as needed)
 FROM apache/airflow:2.6.1
 
+# Use bash with strict flags for RUN steps
+SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
+
 # Switch to root to install additional packages
 USER root
 
 # Set non-interactive mode for apt-get
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install Java (OpenJDK 17 headless), procps (for 'ps') and bash
+# Install Java 17 (headless) and procps
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends openjdk-17-jdk-headless procps bash && \
-    rm -rf /var/lib/apt/lists/* && \
-    # Ensure Spark’s scripts run with bash instead of dash
-    ln -sf /bin/bash /bin/sh && \
-    # Create expected JAVA_HOME directory and symlink the java binary there
-    mkdir -p /usr/lib/jvm/java-17-openjdk-amd64/bin && \
-    ln -s "$(which java)" /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+    apt-get install -y --no-install-recommends \
+        openjdk-17-jdk-headless \
+        procps && \
+    rm -rf /var/lib/apt/lists/*
 
-# Set JAVA_HOME to the directory expected by Spark
+# Set JAVA_HOME for Java 17 and prepend to PATH
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-ENV PATH=$PATH:$JAVA_HOME/bin
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
+# (Optional) Verify Java is available at build time
+RUN java -version
 
 # Set the working directory
 WORKDIR /app
@@ -33,5 +36,5 @@ USER airflow
 # Install Python dependencies using requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Create a volume mount point for notebooks
-VOLUME /app
+# Create a volume mount point for notebooks (optional)
+VOLUME ["/app"]
