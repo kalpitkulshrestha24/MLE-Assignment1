@@ -71,7 +71,7 @@ for date_str in dates_str_lst:
     utils.data_processing_bronze_table.process_bronze_table(date_str, bronze_lms_directory, spark)
 
 
-# create bronze datalake
+# create silver datalake
 silver_loan_daily_directory = "datamart/silver/loan_daily/"
 
 if not os.path.exists(silver_loan_daily_directory):
