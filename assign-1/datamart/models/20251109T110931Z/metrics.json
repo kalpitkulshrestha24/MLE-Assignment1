@@ -1,0 +1,40 @@
+{
+  "run_id": "20251109T110931Z",
+  "snapshot_feature_path": "datamart/gold/label_store/feature_store/gold_feature_store_2024_12_01.parquet",
+  "snapshot_label_path": "datamart/gold/label_store/label_store/gold_label_store_2024_12_01.parquet",
+  "train_rows": 397,
+  "test_rows": 101,
+  "auc_roc": 1.0,
+  "auc_pr": 0.9999999999999999,
+  "confusion_matrix": {
+    "0": {
+      "0": 70,
+      "1": 0
+    },
+    "1": {
+      "0": 0,
+      "1": 31
+    }
+  },
+  "label_def": "30dpd_6mob",
+  "feature_count": 16,
+  "features_used": [
+    "balance",
+    "balance_to_loan_ratio",
+    "due_amt",
+    "installment_num",
+    "installments_missed",
+    "is_early_tenure",
+    "is_late_tenure",
+    "is_mid_tenure",
+    "loan_amt",
+    "mob",
+    "overdue_amt",
+    "overdue_to_due_ratio",
+    "paid_amt",
+    "paid_to_due_ratio",
+    "tenure",
+    "tenure_remaining"
+  ],
+  "notes": "Customer-grouped split; inverse-frequency class weights; 0.5 threshold."
+}
